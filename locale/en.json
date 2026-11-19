@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "NoKV Workspace",
+    "description": "NoKV as model tools: workbench lifecycle, generation-fenced writes, commit / snapshot / fork, and workspace search, so agent state stays reproducible, forkable, and auditable.",
+    "detail": "docs/DETAIL.md"
+  }
+}

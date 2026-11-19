@@ -1,0 +1,68 @@
+{
+  "name": "dsh-nokv",
+  "version": "0.1.0",
+  "private": false,
+  "description": "NoKV workspace state layer for the DeepSeek Harness: model tools for workbenches, generation-fenced writes, commits, snapshots, forks, and workspace search",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/types/**/*.d.ts",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE",
+    "icon.svg",
+    "locale",
+    "docs",
+    "market/**"
+  ],
+  "keywords": [
+    "dsh-plugin",
+    "dsh",
+    "deepseek-harness",
+    "cordis-plugin",
+    "cordis",
+    "nokv",
+    "workspace",
+    "agent-workspace",
+    "artifacts",
+    "versioned-state",
+    "checkpoint",
+    "fork"
+  ],
+  "author": "NoKV authors",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NoKV-Lab/dsh-nokv.git"
+  },
+  "homepage": "https://github.com/NoKV-Lab/dsh-nokv#readme",
+  "bugs": {
+    "url": "https://github.com/NoKV-Lab/dsh-nokv/issues"
+  },
+  "engines": {
+    "node": ">=22",
+    "dsh": ">=0.2.1-rc.2 <0.3.0-0"
+  },
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.5 || ^4.0.6-alpha.1",
+    "@deepseek-ai/dsh-tools": ">=0.2.1-rc.2 <0.3.0-0",
+    "@deepseek-ai/schemastery": "^3.18.5"
+  },
+  "icon": "./icon.svg"
+}

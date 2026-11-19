@@ -1,0 +1,57 @@
+#!/usr/bin/env node
+/**
+ * Fake `nokv` used by the dsh-nokv unit test. It speaks the parts of the CLI
+ * contract the plugin relies on, without a deployment:
+ *
+ * - one JSON document on stdout, exit 0 on success;
+ * - exit 11 with a diagnostic on stderr for a permission denial;
+ * - honours the first JSON argument it is given;
+ * - writes its argv to $NOKV_FAKE_LOG, one JSON line per call.
+ */
+import { appendFileSync } from 'node:fs'
+
+const argv = process.argv.slice(2)
+if (process.env.NOKV_FAKE_LOG) {
+  appendFileSync(process.env.NOKV_FAKE_LOG, JSON.stringify(argv) + '\n')
+}
+
+const last = argv.at(-1) ?? ''
+let input = {}
+try {
+  input = JSON.parse(last)
+} catch {
+  input = {}
+}
+
+if (input.sleep_ms) {
+  await new Promise((resolve) => setTimeout(resolve, input.sleep_ms))
+  process.stdout.write(JSON.stringify({ ok: true, slept: input.sleep_ms }))
+  process.exit(0)
+}
+
+if (input.fail === 'permission') {
+  process.stderr.write('{"status":"error","code":"PermissionDenied","message":"caller holds no role on this root","retryable":false,"details":{},"class":"permission_denied","next_action":"do_not_retry"}\n')
+  process.exit(11)
+}
+
+if (input.fail === 'operator') {
+  process.stderr.write('{"status":"error","code":"OperatorRequired","message":"control directory is group-writable","retryable":false,"details":{},"class":"operator_required","next_action":"operator"}\n')
+  process.exit(9)
+}
+
+if (input.big) {
+  process.stdout.write('x'.repeat(input.big))
+  process.exit(0)
+}
+
+const verb = argv.filter((item) => item.startsWith('workbench_') || item === 'operation' || item === 'materialize')[0] ?? 'unknown'
+process.stdout.write(JSON.stringify({
+  ok: true,
+  verb,
+  workbench_id: input.id ?? input.destination_id ?? 'run-1',
+  generation: 3,
+  revision: 'sha256:0000000000000000000000000000000000000000000000000000000000000000',
+  operation_id: input.operation_id ?? null,
+  route: argv.filter((item) => item.startsWith('--')),
+  input,
+}))

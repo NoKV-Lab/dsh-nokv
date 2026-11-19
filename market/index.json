@@ -1,0 +1,65 @@
+{
+  "format": 1,
+  "title": {
+    "en": "NoKV DSH plugins",
+    "zh": "NoKV DSH 插件"
+  },
+  "description": {
+    "en": "Bundles published alongside NoKV, the state layer for agent workspaces.",
+    "zh": "随 NoKV（agent workspace 状态层）发布的 DSH 插件。"
+  },
+  "metadata": {
+    "categories": {
+      "tools": {
+        "title": {
+          "en": "Tools & Capabilities",
+          "zh": "工具与能力"
+        }
+      }
+    }
+  },
+  "plugins": [
+    {
+      "name": "dsh-nokv",
+      "title": {
+        "en": "NoKV Workspace",
+        "zh": "NoKV 工作区"
+      },
+      "description": {
+        "en": "NoKV as model tools: versioned workbenches with generation-fenced writes, commit, snapshot, fork, and workspace search.",
+        "zh": "把 NoKV 变成模型工具：可版本化的工作区、带 generation 栅栏的写入、commit / snapshot / fork 与工作区检索。"
+      },
+      "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB4PSI2IiB5PSI3LjUiIHdpZHRoPSIxOSIgaGVpZ2h0PSI2IiByeD0iMi42IiBmaWxsPSIjM0I4MkY2Ii8+CiAgPHJlY3QgeD0iNiIgeT0iMTUiIHdpZHRoPSIxNSIgaGVpZ2h0PSI2IiByeD0iMi42IiBmaWxsPSIjM0I4MkY2IiBvcGFjaXR5PSIuNzIiLz4KICA8cmVjdCB4PSI2IiB5PSIyMi41IiB3aWR0aD0iMTEiIGhlaWdodD0iNiIgcng9IjIuNiIgZmlsbD0iIzNCODJGNiIgb3BhY2l0eT0iLjQ2Ii8+CiAgPHBhdGggZD0iTTI2IDEwLjV2Ny41YTQgNCAwIDAgMCA0IDRoMS41IiBzdHJva2U9IiNGNTlFMEIiIHN0cm9rZS13aWR0aD0iMi4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIGZpbGw9Im5vbmUiLz4KICA8Y2lyY2xlIGN4PSIyNiIgY3k9IjEwLjUiIHI9IjMiIGZpbGw9IiNGNTlFMEIiLz4KPC9zdmc+Cg==",
+      "author": "NoKV authors",
+      "homepage": "https://github.com/NoKV-Lab/NoKV#readme",
+      "repository": {
+        "url": "https://github.com/NoKV-Lab/NoKV",
+        "directory": "integrations/dsh"
+      },
+      "metadata": {
+        "category": "tools",
+        "keywords": [
+          "nokv",
+          "workspace",
+          "artifacts",
+          "versioned-state",
+          "checkpoint",
+          "fork",
+          "agent-workspace"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1795075085,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.2 <0.3.0-0"
+          }
+        }
+      ]
+    }
+  ]
+}

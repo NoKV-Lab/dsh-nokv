@@ -1,0 +1,29 @@
+# dsh-nokv bundle patch: one row inserting the NoKV workspace tools over the
+# profile root. Later bundle patches and the profile's own cordis.patch.yml
+# address this row by id (`nokv`), with the last write winning.
+#
+# The row carries deployment facts only — where the nokv executable is and how
+# to reach a deployment. Behavioural defaults that a user may want to change
+# stay on this same row's Config, editable from the profile patch or the
+# Plugins page configuration page:
+#
+#   - id: nokv
+#     config:
+#       timeoutMs: 60000
+#
+- insert:
+    - id: nokv
+      name: dsh-nokv
+      config:
+        # Executable name or absolute path; empty means `nokv` from PATH.
+        # nokvPath: nokv
+        # Deployment route options. Leave all empty for an embedded/local
+        # single-host deployment; fill the ones your deployment requires.
+        # rootId: ''
+        # agentId: ''
+        # controlDir: ''
+        # etcdEndpoint: ''
+        # objectBucket: ''
+        # objectEndpoint: ''
+        timeoutMs: 30000
+        maxOutputBytes: 200000

@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "NoKV 工作区",
+    "description": "把 NoKV 变成模型的工具：workbench 生命周期、带 generation 栅栏的写入、commit / snapshot / fork、工作区检索，状态可复现、可分叉、可审计。",
+    "detail": "docs/DETAIL.zh.md"
+  }
+}
