@@ -31,7 +31,7 @@
       },
       "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB4PSI2IiB5PSI3LjUiIHdpZHRoPSIxOSIgaGVpZ2h0PSI2IiByeD0iMi42IiBmaWxsPSIjM0I4MkY2Ii8+CiAgPHJlY3QgeD0iNiIgeT0iMTUiIHdpZHRoPSIxNSIgaGVpZ2h0PSI2IiByeD0iMi42IiBmaWxsPSIjM0I4MkY2IiBvcGFjaXR5PSIuNzIiLz4KICA8cmVjdCB4PSI2IiB5PSIyMi41IiB3aWR0aD0iMTEiIGhlaWdodD0iNiIgcng9IjIuNiIgZmlsbD0iIzNCODJGNiIgb3BhY2l0eT0iLjQ2Ii8+CiAgPHBhdGggZD0iTTI2IDEwLjV2Ny41YTQgNCAwIDAgMCA0IDRoMS41IiBzdHJva2U9IiNGNTlFMEIiIHN0cm9rZS13aWR0aD0iMi4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIGZpbGw9Im5vbmUiLz4KICA8Y2lyY2xlIGN4PSIyNiIgY3k9IjEwLjUiIHI9IjMiIGZpbGw9IiNGNTlFMEIiLz4KPC9zdmc+Cg==",
       "author": "NoKV authors",
-      "homepage": "https://github.com/NoKV-Lab/NoKV#readme",
+      "homepage": "https://github.com/NoKV-Lab/dsh-nokv#readme",
       "repository": {
         "url": "https://github.com/NoKV-Lab/dsh-nokv"
       },
