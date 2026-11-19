@@ -33,8 +33,7 @@
       "author": "NoKV authors",
       "homepage": "https://github.com/NoKV-Lab/NoKV#readme",
       "repository": {
-        "url": "https://github.com/NoKV-Lab/NoKV",
-        "directory": "integrations/dsh"
+        "url": "https://github.com/NoKV-Lab/dsh-nokv"
       },
       "metadata": {
         "category": "tools",
