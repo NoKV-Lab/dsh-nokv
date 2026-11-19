@@ -1,6 +1,6 @@
 {
   "name": "dsh-nokv",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "description": "NoKV workspace state layer for the DeepSeek Harness: model tools for workbenches, generation-fenced writes, commits, snapshots, forks, and workspace search",
   "type": "module",
@@ -15,15 +15,16 @@
     "./package.json": "./package.json"
   },
   "files": [
+    "LICENSE",
+    "README.md",
+    "cordis.patch.yml",
+    "docs",
+    "icon.svg",
     "lib/**/*.js",
     "lib/types/**/*.d.ts",
-    "cordis.patch.yml",
-    "README.md",
-    "LICENSE",
-    "icon.svg",
     "locale",
-    "docs",
-    "market/**"
+    "market/**",
+    "scripts/**"
   ],
   "keywords": [
     "dsh-plugin",

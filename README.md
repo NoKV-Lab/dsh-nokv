@@ -42,6 +42,19 @@ S3 credentials are **not** plugin configuration: NoKV reads them from the AWS st
 
 Set `allowWrites: false` for a read-only agent: the publishing tool is then not registered at all.
 
+## Local development
+
+A single-host deployment needs an S3-compatible bucket, a control directory, and an owner process. NoKV has no macOS binary release, so build the CLI from the `v0.20.0` source (`cargo build --release -p nokv --bin nokv`, ~2 minutes on Apple Silicon) or use the container image.
+
+For a throwaway local stack:
+
+```bash
+# one-time: python3 -m venv .venv && .venv/bin/pip install "moto[server]"
+scripts/local-dev.sh
+```
+
+It starts a moto S3 endpoint, creates the bucket, provisions the root, prints the matching plugin configuration, and runs the owner in the foreground. With that running, set the row's configuration to those values (or copy them into `cordis.patch.yml`), and a plain `nokv` on `PATH` is enough — moto accepts unauthenticated requests, so no AWS credentials are needed for this local case. A real S3 store needs the standard AWS environment instead.
+
 ## Tools
 
 | Tool | What it covers |

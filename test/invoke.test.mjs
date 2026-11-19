@@ -42,6 +42,11 @@ test('commit parses the manifest JSON text', () => {
   assert.deepEqual(body.manifest, { task: 'smoke', ok: true })
 })
 
+test('fork is the CLI restore tool', () => {
+  const argv = buildArgv('fork', { workbench: 'w', destination: 'w-b', at_snapshot_name: 'pre' })
+  assert.deepEqual(argv.slice(0, 2), ['workbench', 'workbench_restore'])
+})
+
 test('fork accepts either a commit or a snapshot selector', () => {
   assert.deepEqual(writeBody('fork', { workbench: 'w', destination: 'w-b', at_snapshot_name: 'pre' }),
     { id: 'w', destination_id: 'w-b', at_snapshot: 'pre' })
