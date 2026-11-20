@@ -20,6 +20,12 @@ The CLI contract has eighteen workbench tools. Exposing all of them costs every 
 2. `lib/nokv.js` prepends the global route flags in the order the CLI documents, spawns the executable with the inherited environment, bounds stdout to `maxOutputBytes`, arms `timeoutMs`, forwards `exec.signal`, and parses answers: one JSON document on stdout for success, one JSON envelope on stderr for failure, plus the stable exit-code map.
 3. `lib/index.js` registers the tools. `execute` returns the CLI envelope as a JSON string, so the canonical tool result is exactly what NoKV said; no field is re-shaped, dropped, or renamed.
 
+## Large artifacts
+
+Two tool calls trade in host paths rather than bytes, because a base64 body in a tool argument is both a context cost and an argv limit: `nokv_upload` maps to the CLI's `collect` (stream a local file into the workbench), and `nokv_materialize` maps to `materialize` (write one artifact back to disk). Both validate the path before spawning: absolute, existing regular file for the upload source, existing parent directory for the destination. Neither changes the other tool surface: `read` still pages, `schema` still describes the CLI.
+
+The remaining ceiling is the CLI artifact limit, `--max-artifact-bytes` (16 MiB by default). The plugin exposes it as `maxArtifactBytes` on the row rather than inventing client-side chunking; a deployment that needs larger single objects raises it.
+
 ## Why the CLI and not the SDK
 
 The CLI is NoKV's own stable agent surface: it fails closed on admission, prints one inspectable schema (`nokv schema`), and carries the retry/identity semantics (`operation_id`, `operation status`) that the model needs. A Host plugin that re-implemented those in JavaScript would have to track a second contract. The cost is process startup per call, which is acceptable for state publishing; a later version can switch to `nokv workbench-session` (JSON lines on stdin/stdout) without changing either tool's surface.
@@ -42,5 +48,6 @@ Route flags are configuration because they are stable per deployment. S3 credent
 ## Limits
 
 - No persistent session yet (see above).
-- No `materialize`/`collect`: they exchange local paths, which a sandboxed agent should not gain silently.
+- Local paths are the machine's paths: `nokv_upload`/`nokv_materialize` are only meaningful when the Harness and the artifact share a filesystem.
+- Still the CLI's 16 MiB default ceiling; no automatic chunking yet.
 - Output is bounded, not paged by the plugin: a `read` that exceeds `maxOutputBytes` is refused with a message telling the caller to narrow with `limit`/`cursor`, never truncated into an invalid JSON prefix.

@@ -20,6 +20,12 @@ CLI 契约里有十八个工作区工具。全部暴露会让每次请求的上�
 2. `lib/nokv.js` 按 CLI 文档顺序拼上全局路由参数，用继承的环境变量 spawn 可执行文件，把 stdout 限制在 `maxOutputBytes` 内，挂 `timeoutMs`，转发 `exec.signal`，并解析两种输出：成功是 stdout 上的一个 JSON 文档，失败是 stderr 上的一行 JSON envelope，另加稳定的退出码表。
 3. `lib/index.js` 注册工具。`execute` 把 CLI 的 envelope 作为 JSON 字符串返回，所以工具的规范结果就是 NoKV 说的原文，不重排、不删字段、不改名。
 
+## 大产物
+
+有两个工具交换的是本机路径而不是字节：`nokv_upload` 对应 CLI 的 `collect`（把本地文件流式写入工作区），`nokv_materialize` 对应 `materialize`（把一个产物写回磁盘）。这样 20 MB 的日志不必进模型上下文，也不受命令行参数长度限制。两者都在起进程前做校验：上传源必须是已存在的绝对路径文件，物化目标必须是绝对路径且父目录存在。
+
+剩下的上限是 CLI 的 `--max-artifact-bytes`（默认 16 MiB）。插件把它暴露成行配置 `maxArtifactBytes`，而不是自己发明分片；需要更大单对象的部署把它调大。
+
 ## 为什么走 CLI 而不是 SDK
 
 CLI 是 NoKV 自己的稳定 agent 面：准入时 fail-closed、输出可检查的 schema（`nokv schema`）、并携带模型需要的重试与身份语义（`operation_id`、`operation status`）。用 JavaScript 重新实现这些等于维护第二套契约。代价是每次调用付一次进程启动，对"发布状态"这个频率可以接受；后续可以切到 `nokv workbench-session`（stdin/stdout JSON 行）而不改任何一个工具的表面。
@@ -42,5 +48,6 @@ CLI 是 NoKV 自己的稳定 agent 面：准入时 fail-closed、输出可检查
 ## 边界
 
 - 暂不使用常驻会话（见上）。
-- 不暴露 `materialize`/`collect`：它们交换的是本地路径，沙箱里的 agent 不应该悄无声息地把字节拉出 NoKV。
+- 本地路径是这台机器的路径：`nokv_upload`/`nokv_materialize` 只在 Harness 与产物共享文件系统时有意义。
+- 仍然是 CLI 的 16 MiB 默认上限，暂未自动分片。
 - 输出是有界拒绝而不是分页：超过 `maxOutputBytes` 的 `read` 会报错并要求用 `limit`/`cursor` 收窄，绝不截断成非法 JSON 前缀。

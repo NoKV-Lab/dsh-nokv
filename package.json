@@ -1,6 +1,6 @@
 {
   "name": "@nokv-lab/dsh-nokv",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": false,
   "description": "NoKV workspace state layer for the DeepSeek Harness: model tools for workbenches, generation-fenced writes, commits, snapshots, forks, and workspace search",
   "type": "module",

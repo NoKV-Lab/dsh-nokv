@@ -63,6 +63,8 @@ It starts a moto S3 endpoint, creates the bucket, provisions the root, prints th
 | --- | --- |
 | `nokv_workspace` | `create`, `put_file` (create-only or replace-only, never upsert), `append`, `edit`, `commit`, `snapshot`, `snapshot_retire`, `fork` |
 | `nokv_query` | `read` (paged, structured or byte ranges), `list`, `stat`, `grep` (literal, not regex), `search`, `catalog`, `find`, `snapshot_list`, `operation_status`, `schema` |
+| `nokv_upload` | Publish a **local file** into a workbench (`collect`), streaming bytes from disk instead of passing them in the tool arguments |
+| `nokv_materialize` | Write one workbench artifact back to a **local path** so an ordinary program can open it |
 
 Practical rules the tools are shaped around:
 
@@ -70,6 +72,7 @@ Practical rules the tools are shaped around:
 - **Pass `expected_generation`** to turn a stale write into a conflict instead of an overwrite.
 - **Read the digest before committing**: `put_file` answers `digest_uri`; `commit` takes `content_digest_uri` (`sha256:` + 64 hex) and `manifest_json`.
 - **Fork, don't mutate history**: `fork` restores a commit or an alive snapshot into a new destination workbench; the source is untouched.
+- **Big artifacts go through paths, not arguments**: `nokv_upload` streams a file from disk and `nokv_materialize` writes one back, so a 20 MB log never enters the model context. The CLI default artifact ceiling is 16 MiB; raise the plugin `maxArtifactBytes` configuration when a deployment accepts more.
 - **`schema` is the escape hatch**: it returns the CLI's own input schemas for every workbench tool, so the model can recover exact fields without another documentation hop.
 
 ## Layout
@@ -85,7 +88,8 @@ locale/          display metadata for the Plugins page
 ## Limitations
 
 - One process per call; the persistent `nokv workbench-session` transport is not used yet, so each call pays CLI startup.
-- `materialize` and `collect` (host-filesystem adapters) are not exposed: they trade in local paths, and a sandboxed agent should not silently pull bytes out of NoKV.
+- `nokv_upload`/`nokv_materialize` require absolute local paths on the machine that runs the Harness; a remote sandbox needs its own path to the artifact (use `nokv_query read` instead).
+- The artifact ceiling is still the CLI's (`--max-artifact-bytes`, 16 MiB default until `maxArtifactBytes` raises it); there is no automatic chunking for larger files yet.
 - No `workbench_aggregate` typing yet; it is reachable through `schema` only. Contributions welcome.
 
 ## License

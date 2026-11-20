@@ -100,3 +100,29 @@ test('invalid input fails before any process starts', () => {
   assert.throws(() => buildArgv('teleport', {}), /unknown nokv op/)
   assert.throws(() => parseJsonArg('{bad', 'manifest_json'), /must be valid JSON text/)
 })
+
+test('upload maps to the CLI collect command', () => {
+  const argv = buildArgv('upload', {
+    workbench: 'w', section: 'outputs', path: 'big.bin', local_path: '/tmp/big.bin',
+    replace: true, expected_generation: 3, content_type: 'application/octet-stream',
+    operation_id: 'e'.repeat(32),
+  })
+  assert.deepEqual(argv, [
+    'collect', 'w', 'outputs', '/tmp/big.bin', 'big.bin',
+    '--replace', '--expected-generation', '3',
+    '--content-type', 'application/octet-stream', '--operation-id', 'e'.repeat(32),
+  ])
+})
+
+test('materialize maps to the materialize command', () => {
+  assert.deepEqual(
+    buildArgv('materialize', { workbench: 'w', section: 'logs', path: 'run.log', dest: '/tmp/run.log' }),
+    ['materialize', 'w', 'logs', 'run.log', '/tmp/run.log'],
+  )
+})
+
+test('file ops validate their own arguments', () => {
+  assert.throws(() => buildArgv('upload', { workbench: 'w', section: 'outputs', path: 'a' }), /requires `local_path`/)
+  assert.throws(() => buildArgv('materialize', { workbench: 'w', section: 'nope', path: 'a', dest: '/tmp/a' }), /section must be one of/)
+  assert.throws(() => buildArgv('materialize', { workbench: 'w', section: 'logs', path: 'a' }), /requires `dest`/)
+})

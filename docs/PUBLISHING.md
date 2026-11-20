@@ -9,10 +9,10 @@ its preview, the bundle patch) is already in the package.
 ```bash
 cd dsh-nokv
 npm login                      # the account that will own the package
-npm publish --access public    # publishes @nokv-lab/dsh-nokv@0.2.0
+npm publish --access public    # publishes @nokv-lab/dsh-nokv@0.2.1
 ```
 
-`npm view @nokv-lab/dsh-nokv@0.2.0 version` confirms the publish. The package declares
+`npm view @nokv-lab/dsh-nokv@0.2.1 version` confirms the publish. The package declares
 `engines.dsh: ">=0.2.1-rc.2 <0.3.0-0"`; the market index must copy that range
 unchanged.
 

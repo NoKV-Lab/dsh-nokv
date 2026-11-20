@@ -29,6 +29,14 @@ test('route options keep documented order and skip empty values', () => {
   assert.deepEqual(routeArgs({}), [])
 })
 
+test('artifact ceiling is a route option and zero means unset', () => {
+  assert.deepEqual(routeArgs({ rootId: 'r'.repeat(32), maxArtifactBytes: 0 }), ['--root-id', 'r'.repeat(32)])
+  assert.deepEqual(
+    routeArgs({ maxArtifactBytes: 33554432 }),
+    ['--max-artifact-bytes', '33554432'],
+  )
+})
+
 test('a successful answer is the parsed JSON envelope', async () => {
   const answer = await runNokv(config, ['workbench', 'workbench_put_file', '{"id":"run-1","section":"outputs","path":"a.txt","text":"hi"}'])
   assert.equal(answer.ok, true)
