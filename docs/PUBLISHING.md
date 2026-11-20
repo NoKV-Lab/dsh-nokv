@@ -1,4 +1,4 @@
-# Publishing dsh-nokv
+# Publishing @nokv-lab/dsh-nokv
 
 The package is ready to publish; the two steps below need a human with the
 accounts. Everything else (README, locale metadata, icon, detail document and
@@ -9,14 +9,26 @@ its preview, the bundle patch) is already in the package.
 ```bash
 cd dsh-nokv
 npm login                      # the account that will own the package
-npm publish --access public    # publishes dsh-nokv@0.1.0
+npm publish --access public    # publishes @nokv-lab/dsh-nokv@0.2.0
 ```
 
-`npm view dsh-nokv@0.1.0 version` confirms the publish. The package declares
+`npm view @nokv-lab/dsh-nokv@0.2.0 version` confirms the publish. The package declares
 `engines.dsh: ">=0.2.1-rc.2 <0.3.0-0"`; the market index must copy that range
 unchanged.
 
 Before each release: bump `version`, run `node --test test/`, then publish.
+
+### Deprecating the unscoped package
+
+The package previously existed as unscoped `dsh-nokv` (owned by the same
+account). After the first scoped release, point it at the new name:
+
+```bash
+npm deprecate dsh-nokv "Renamed to @nokv-lab/dsh-nokv. Install @nokv-lab/dsh-nokv instead."
+```
+
+The unscoped copy keeps its last version for reproducibility; new installs
+follow the deprecation message.
 
 ## 2. A plugin market index
 
@@ -51,7 +63,7 @@ npm version, `publishTimestamp` is epoch seconds of the publish, and
    - [NoKV-Lab/dsh-nokv](https://github.com/NoKV-Lab/dsh-nokv) - NoKV workspace state as DSH tools: versioned workbenches with generation-fenced writes, commits, snapshots, forks, and workspace search.
    ```
 
-2. passes their checks: it installs with `dsh plugin add dsh-nokv`, the one-line
+2. passes their checks: it installs with `dsh plugin add @nokv-lab/dsh-nokv`, the one-line
    description matches what the plugin actually does, and the entry sits in the
    right category.
 

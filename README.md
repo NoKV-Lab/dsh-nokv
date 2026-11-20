@@ -1,4 +1,6 @@
-# dsh-nokv
+# NoKV workspace for DeepSeek Harness
+
+`@nokv-lab/dsh-nokv`
 
 NoKV workspace state as [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) model tools.
 
@@ -12,10 +14,10 @@ A [NoKV](https://github.com/NoKV-Lab/NoKV) workbench is a durable, versioned wor
 
 ## Install
 
-From the Plugins page: **Add plugin** → paste this directory (or the npm spec) → **Install** → **Enable now**. From an agent or the CLI:
+From the Plugins page: **Add plugin** → paste this directory (or `@nokv-lab/dsh-nokv`) → **Install** → **Enable now**. From an agent or the CLI:
 
 ```bash
-dsh plugin --profile desktop add /absolute/path/to/dsh-nokv
+dsh plugin --profile desktop add @nokv-lab/dsh-nokv
 ```
 
 Installing writes the profile's dependency and inserts the `nokv` row. Uninstalling removes both; configuration written through the row is kept in the profile patch.

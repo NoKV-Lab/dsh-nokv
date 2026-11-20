@@ -1,4 +1,4 @@
-# dsh-nokv bundle patch: one row inserting the NoKV workspace tools over the
+# @nokv-lab/dsh-nokv bundle patch: one row inserting the NoKV workspace tools over the
 # profile root. Later bundle patches and the profile's own cordis.patch.yml
 # address this row by id (`nokv`), with the last write winning.
 #
@@ -13,7 +13,7 @@
 #
 - insert:
     - id: nokv
-      name: dsh-nokv
+      name: "@nokv-lab/dsh-nokv"
       config:
         # Executable name or absolute path; empty means `nokv` from PATH.
         # nokvPath: nokv

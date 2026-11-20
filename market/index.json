@@ -20,7 +20,7 @@
   },
   "plugins": [
     {
-      "name": "dsh-nokv",
+      "name": "@nokv-lab/dsh-nokv",
       "title": {
         "en": "NoKV Workspace",
         "zh": "NoKV 工作区"
@@ -49,7 +49,7 @@
       },
       "versions": [
         {
-          "version": "0.1.1",
+          "version": "0.2.0",
           "publishTimestamp": 1795077483,
           "source": {
             "type": "npm"
